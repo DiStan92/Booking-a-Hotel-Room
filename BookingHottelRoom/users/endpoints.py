@@ -1,22 +1,16 @@
 
 from rest_framework import status
-
 from rest_framework.response import Response
-
 from rest_framework.generics import CreateAPIView
-
-from rest_framework.permissions import AllowAny
-
+from rest_framework import permissions
 from .models import User
-
 from .serializers import UserRegistrSerializer
-
 
 
 class RegistrUserView(CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserRegistrSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
         serializer = UserRegistrSerializer(data=request.data)
