@@ -21,19 +21,29 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+AUTH_USER_MODEL = "users.User"
+
 
 # Application definition
 
 INSTALLED_APPS = [
-    *["django.contrib.admin",
-      "django.contrib.auth",
-      "django.contrib.contenttypes",
-      "django.contrib.sessions",
-      "django.contrib.messages",
-      "django.contrib.staticfiles"],
+    *["django.contrib.admin", "django.contrib.auth", "django.contrib.contenttypes", "django.contrib.sessions", "django.contrib.messages", "django.contrib.staticfiles"],
     *["room", "users"],
-    *["rest_framework"]
+    *["rest_framework"],
+    *["djoser"],
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ],
+}
+
+DJOSER = {
+    "ACTIVATION_URL": "#/activate/{uid}/{token}",
+    "SEND_ACTIVATION_EMAIL": False,
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
