@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import User
+
+from .models import Booking, User
 
 
 class UserRegistrSerializer(serializers.ModelSerializer):
@@ -7,18 +8,24 @@ class UserRegistrSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['email', 'username', 'password', 'password2']
+        fields = ["email", "username", "password", "password2"]
 
     def save(self, *args, **kwargs):
         user = User(
-            email=self.validated_data['email'],
-            username=self.validated_data['username'],
+            email=self.validated_data["email"],
+            username=self.validated_data["username"],
         )
 
-        password = self.validated_data['password']
-        password2 = self.validated_data['password2']
+        password = self.validated_data["password"]
+        password2 = self.validated_data["password2"]
         if password != password2:
             raise serializers.ValidationError({password: "Пароль не совпадает"})
         user.set_password(password)
         user.save()
         return user
+
+
+class BookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Booking
+        fields = "__all__"

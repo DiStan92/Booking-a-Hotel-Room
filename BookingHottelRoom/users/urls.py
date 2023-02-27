@@ -1,9 +1,8 @@
-from django.contrib import admin
-from django.urls import include, path
-from .endpoints import RegistrUserView
+from django.urls import path, re_path
+
+from .endpoints import BookingRUDView, RegistrUserView
 
 urlpatterns = [
-    #path('api-auth', include('rest_framework.urls')),
-    #path('auth/', include('djoser.urls')),
-    path('registr/', RegistrUserView.as_view(), name='registr')
+    path("registr/", RegistrUserView.as_view(), name="registr"),
+    re_path("^guest/(?P<id>.+)/booking", BookingRUDView.as_view(), name="user-booking"),
 ]
