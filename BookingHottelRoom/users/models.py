@@ -44,7 +44,7 @@ class Booking(models.Model):
     date_off = models.DateField(null=False)
 
     def __str__(self):
-        return f"{self.pk} - {self.room}"
+        return f"{self.pk} - {self.guest} - {self.room}"
 
     class Meta:
         verbose_name = "booking"

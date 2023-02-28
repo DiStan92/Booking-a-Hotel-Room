@@ -1,5 +1,5 @@
 from rest_framework import permissions, status
-from rest_framework.generics import CreateAPIView, ListCreateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, ListCreateAPIView
 from rest_framework.response import Response
 
 from .models import Booking, User
@@ -23,7 +23,7 @@ class RegistrUserView(CreateAPIView):
             return Response(data)
 
 
-class BookingRUDView(ListCreateAPIView):
+class BookingLCView(ListCreateAPIView):
     serializer_class = BookingSerializer
     permission_classes = [permissions.IsAuthenticated]
 
