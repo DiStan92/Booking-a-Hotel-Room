@@ -1,9 +1,14 @@
-from django.contrib import admin
-from django.urls import include, path
-from .endpoints import RegistrUserView
+from django.urls import include, path, re_path
+from rest_framework import routers
+from rest_framework.routers import DefaultRouter
+
+from .endpoints import BookingLCView, BookingViewSet, RegistrUserView
+
+router = DefaultRouter()
+router.register("booking-viewset", BookingViewSet)
 
 urlpatterns = [
-    #path('api-auth', include('rest_framework.urls')),
-    #path('auth/', include('djoser.urls')),
-    path('registr/', RegistrUserView.as_view(), name='registr')
+    path("", include((router.urls, "booking"))),
+    path("registr/", RegistrUserView.as_view(), name="registr"),
+    re_path("^guest/(?P<id>.+)/booking", BookingLCView.as_view(), name="user-booking"),
 ]

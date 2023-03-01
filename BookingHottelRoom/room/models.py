@@ -7,7 +7,7 @@ class Room(models.Model):
     places = models.IntegerField()
 
     def __str__(self):
-        return f"{self.pk} - {self.number}"
+        return f"number {self.number} - places {self.places} - price {self.price}"
 
     class Meta:
         verbose_name = "number"

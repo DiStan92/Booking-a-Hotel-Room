@@ -2,11 +2,11 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from room.models import Room
 
 from BookingHottelRoom.mixins import DateTimeMixin
 
 from .managers import CustomUserManager
-from room.models import Room
 
 
 class User(AbstractBaseUser, PermissionsMixin, DateTimeMixin):
@@ -44,7 +44,7 @@ class Booking(models.Model):
     date_off = models.DateField(null=False)
 
     def __str__(self):
-        return f"{self.pk} - {self.room}"
+        return f"{self.pk} - {self.guest} - {self.room}"
 
     class Meta:
         verbose_name = "booking"

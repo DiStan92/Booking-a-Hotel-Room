@@ -29,13 +29,16 @@ AUTH_USER_MODEL = "users.User"
 INSTALLED_APPS = [
     *["django.contrib.admin", "django.contrib.auth", "django.contrib.contenttypes", "django.contrib.sessions", "django.contrib.messages", "django.contrib.staticfiles"],
     *["room", "users"],
-    *["rest_framework", "djoser"]
+    *["rest_framework", "djoser", "django_filters"],
 ]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
+    ],
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
     ],
 }
 
