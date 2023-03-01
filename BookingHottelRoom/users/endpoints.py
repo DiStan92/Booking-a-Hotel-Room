@@ -1,6 +1,8 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions, status
 from rest_framework.generics import CreateAPIView, ListAPIView, ListCreateAPIView
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
 from .models import Booking, User
 from .serializers import BookingSerializer, UserRegistrSerializer
@@ -23,10 +25,24 @@ class RegistrUserView(CreateAPIView):
             return Response(data)
 
 
-class BookingLCView(ListCreateAPIView):
+class BookingLCView(ListAPIView):
     serializer_class = BookingSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         guest = self.kwargs["id"]
         return Booking.objects.filter(guest_id=guest)
+
+
+class BookingListView(ListCreateAPIView):
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["date_on", "date_off"]
+
+
+class BookingViewSet(ModelViewSet):
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
+    permission_classes = [permissions.IsAuthenticated]
