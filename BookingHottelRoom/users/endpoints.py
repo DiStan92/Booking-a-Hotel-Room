@@ -1,3 +1,4 @@
+import requests
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions, status
 from rest_framework.generics import CreateAPIView, ListAPIView, ListCreateAPIView
@@ -6,6 +7,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import Booking, User
 from .serializers import BookingSerializer, UserRegistrSerializer
+from .services import booking_filter
 
 
 class RegistrUserView(CreateAPIView):
