@@ -1,6 +1,6 @@
-from requests import request, Response
+from requests import Response, request
 
-from users.models import Booking
+# from users.models import Booking
 
 
 def booking_filter(data):

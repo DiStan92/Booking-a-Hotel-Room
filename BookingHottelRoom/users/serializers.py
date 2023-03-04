@@ -2,6 +2,8 @@ from rest_framework import serializers
 
 from .models import Booking, User
 
+__all__ = ["UserRegistrSerializer", "BookingSerializer"]
+
 
 class UserRegistrSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField()
@@ -19,7 +21,7 @@ class UserRegistrSerializer(serializers.ModelSerializer):
         password = self.validated_data["password"]
         password2 = self.validated_data["password2"]
         if password != password2:
-            raise serializers.ValidationError({password: "Пароль не совпадает"})
+            raise serializers.ValidationError({password: "Password does not match"})
         user.set_password(password)
         user.save()
         return user

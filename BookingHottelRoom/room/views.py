@@ -1,3 +1,16 @@
-from django.shortcuts import render
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import permissions
+from rest_framework.generics import ListAPIView
 
-# Create your views here.
+from .models import Room
+from .serializers import RoomSerializer
+
+__all__ = ["RoomListAPIView"]
+
+
+class RoomListAPIView(ListAPIView):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+    permission_classes = [permissions.AllowAny]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["price", "places"]
