@@ -1,3 +1,4 @@
+from django.contrib.sites import requests
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import permissions, status
 from rest_framework.generics import CreateAPIView, ListAPIView, ListCreateAPIView
@@ -36,15 +37,24 @@ class BookingListAPIView(ListAPIView):
         return Booking.objects.filter(guest_id=guest)
 
 
-class BookingListCreateAPIView(ListCreateAPIView):
+class BookingListCreateAPIView(ListCreateAPIView, DjangoFilterBackend):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["date_start_at", "date_end_at"]
 
+    """"def filter_queryset(self, queryset, view):
+        filterset = self.get_filterset_kwargs(queryset, view)
+        if (filterset["data"]["date_start_at"] < Booking.date_start_at\
+            and filterset["data"]["date_end_at"] < Booking.date_start_at)\
+            or (filterset["data"]["date_start_at"] > Booking.date_end_at\
+            and filterset["data"]["date_end_at"] > Booking.date_end_at):
+            return Booking.objects.room"""
+
 
 class BookingViewSet(ModelViewSet):
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
     permission_classes = [permissions.IsAuthenticated]
+
